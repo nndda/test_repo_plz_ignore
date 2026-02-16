@@ -50,6 +50,10 @@ jobs:
           sparse-checkout: build-exports.sh
           sparse-checkout-cone-mode: true
 
+      - name: Directory debug
+        run: |
+          ls -lah
+
       - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
         run: ./build-exports.sh
         env:

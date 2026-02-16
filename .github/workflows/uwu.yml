@@ -51,10 +51,12 @@ jobs:
             unzip \
             curl
 
-          echo ""
-
+          echo "Python version:"
           python --version
+
+          echo "MinGW-w64 version:"
           x86_64-w64-mingw32-gcc --version
+          i686-w64-mingw32-gcc --version
 
       - name: Checkout Godot source code repository
         uses: actions/checkout@v6
@@ -129,11 +131,11 @@ jobs:
       - name: Build Windows export template
         if: ${{ matrix.target == 'windows' }}
         run: |
-          # scons platform=windows arch=x86_32 lto=full profile="custom.py" use_mingw=yes target=template_debug
-          scons platform=windows arch=x86_32 lto=full profile="custom.py" use_mingw=yes target=template_release debug_symbols=no
-
           # scons platform=windows arch=x86_64 lto=full profile="custom.py" use_mingw=yes target=template_debug
           scons platform=windows arch=x86_64 lto=full profile="custom.py" use_mingw=yes target=template_release debug_symbols=no
+
+          # scons platform=windows arch=x86_32 lto=full profile="custom.py" use_mingw=yes target=template_debug
+          scons platform=windows arch=x86_32 lto=full profile="custom.py" use_mingw=yes target=template_release debug_symbols=no
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v6

@@ -52,7 +52,7 @@ jobs:
       #     sparse-checkout-cone-mode: false
 
       - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
-        run: curl -fsSL https://cdn.jsdelivr.net/gh/nndda/build-godot@main/build-exports.sh | bash
+        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/refs/heads/main/build-exports.sh | bash
         env:
           EXPORT_PLATFORM: ${{ matrix.target }}
           EXPORT_ARCH: ${{ matrix.arch }}

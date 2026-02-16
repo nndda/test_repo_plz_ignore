@@ -44,15 +44,15 @@ jobs:
         with:
           python-version: "3.14.2"
 
-      - uses: actions/checkout@v6
-        with:
-          repository: nndda/build-godot
-          sparse-checkout: |
-            build-exports.sh
-          sparse-checkout-cone-mode: false
+      # - uses: actions/checkout@v6
+      #   with:
+      #     repository: nndda/build-godot
+      #     sparse-checkout: |
+      #       build-exports.sh
+      #     sparse-checkout-cone-mode: false
 
       - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
-        run: ./build-exports.sh
+        run: curl -fsSL https://cdn.jsdelivr.net/gh/nndda/build-godot@main/build-exports.sh | bash
         env:
           EXPORT_PLATFORM: ${{ matrix.target }}
           EXPORT_ARCH: ${{ matrix.arch }}

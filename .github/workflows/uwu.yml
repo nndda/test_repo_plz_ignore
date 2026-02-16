@@ -51,7 +51,7 @@ jobs:
             build-exports.sh
           sparse-checkout-cone-mode: true
 
-      - name: Build platform: ${{ matrix.target }}-${{ matrix.arch }}
+      - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
         run: |
           chmod +x ./build-exports.sh
           ./build-exports.sh

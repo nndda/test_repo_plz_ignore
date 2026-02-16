@@ -59,6 +59,8 @@ jobs:
             libxrandr-dev \
             libwayland-dev \
             mingw-w64 \
+            g++-multilib \
+            gcc-multilib \
             unzip \
             curl
 

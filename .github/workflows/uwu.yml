@@ -11,7 +11,7 @@ defaults:
     shell: bash
 
 jobs:
-  build-linux-windows:
+  build-desktop:
     env:
       GODOT_VERSION: 4.6.1-stable
 
@@ -47,14 +47,11 @@ jobs:
       - uses: actions/checkout@v6
         with:
           repository: nndda/build-godot
-          sparse-checkout: |
-            build-exports.sh
+          sparse-checkout: build-exports.sh
           sparse-checkout-cone-mode: true
 
-      - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
-        run: |
-          chmod +x ./build-exports.sh
-          ./build-exports.sh
+      - name: Build platform: ${{ matrix.target }}-${{ matrix.arch }}
+        run: ./build-exports.sh
         env:
           EXPORT_PLATFORM: ${{ matrix.target }}
           EXPORT_ARCH: ${{ matrix.arch }}

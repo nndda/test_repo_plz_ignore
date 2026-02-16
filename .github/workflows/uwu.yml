@@ -119,7 +119,7 @@ jobs:
       - name: Install Direct3D 12 Driver
         if: ${{ matrix.target == 'windows' }}
         run: |
-          python ./misc\scripts\install_d3d12_sdk_windows.py
+          python ./misc/scripts/install_d3d12_sdk_windows.py
 
       - name: Build Windows export template
         if: ${{ matrix.target == 'windows' }}

@@ -140,7 +140,7 @@ jobs:
       - name: Build Windows export template
         if: ${{ matrix.target == 'windows' }}
         run: |
-          scons platform=windows arch=arch=${{ matrix.arch }} lto=full profile="custom.py" use_mingw=yes target=template_release debug_symbols=no
+          scons platform=windows arch=${{ matrix.arch }} lto=full profile="custom.py" use_mingw=yes target=template_release debug_symbols=no
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v6

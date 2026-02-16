@@ -47,12 +47,9 @@ jobs:
       - uses: actions/checkout@v6
         with:
           repository: nndda/build-godot
-          sparse-checkout: build-exports.sh
-          sparse-checkout-cone-mode: true
-
-      - name: Directory debug
-        run: |
-          ls -lah
+          sparse-checkout: |
+            build-exports.sh
+          sparse-checkout-cone-mode: false
 
       - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
         run: ./build-exports.sh

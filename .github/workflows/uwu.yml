@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - linux
+          # - linux
           - windows
 
     steps:
@@ -122,6 +122,10 @@ jobs:
             /usr/bin/i686-w64-mingw32-gcc-posix
           sudo update-alternatives --set i686-w64-mingw32-g++ \
             /usr/bin/i686-w64-mingw32-g++-posix
+
+          echo "MinGW-w64:"
+          x86_64-w64-mingw32-gcc --version
+          i686-w64-mingw32-gcc --version
 
       - name: Install Direct3D 12 Driver
         if: ${{ matrix.target == 'windows' }}

@@ -17,6 +17,12 @@ jobs:
     env:
       GODOT_VERSION: 4.6-stable
 
+    strategy:
+      matrix:
+        target:
+          - linux
+          - windows
+
     steps:
       - name: Install dependencies
         run: | 
@@ -89,7 +95,7 @@ jobs:
           EOF
 
       - name: Build Linux export templates
-        continue-on-error: true
+        if: ${{ matrix.target == 'linux' }}
         run: |
           scons platform=linuxbsd arch=x86_64 lto=full profile="custom.py" target=template_debug
           scons platform=linuxbsd arch=x86_64 lto=full profile="custom.py" target=template_release debug_symbols=no
@@ -97,17 +103,8 @@ jobs:
           scons platform=linuxbsd arch=x86_32 lto=full profile="custom.py" target=template_debug
           scons platform=linuxbsd arch=x86_32 lto=full profile="custom.py" target=template_release debug_symbols=no
 
-      # - name: Build macOS export template
-      #   continue-on-error: true
-      #   run: |
-      #     scons platform=macos arch=arm64 lto=full target=template_debug
-      #     scons platform=macos arch=arm64 lto=full target=template_release debug_symbols=no
-
-      #     scons platform=macos arch=x86_64 lto=full target=template_debug
-      #     scons platform=macos arch=x86_64 lto=full target=template_release debug_symbols=no generate_bundle=yes
-
       - name: Update POSIX
-        continue-on-error: true
+        if: ${{ matrix.target == 'windows' }}
         run: |
           sudo update-alternatives --set x86_64-w64-mingw32-gcc \
             /usr/bin/x86_64-w64-mingw32-gcc-posix
@@ -119,8 +116,13 @@ jobs:
           sudo update-alternatives --set i686-w64-mingw32-g++ \
             /usr/bin/i686-w64-mingw32-g++-posix
 
+      - name: Install Direct3D 12 Driver
+        if: ${{ matrix.target == 'windows' }}
+        run: |
+          python misc\scripts\install_d3d12_sdk_windows.py
+
       - name: Build Windows export template
-        continue-on-error: true
+        if: ${{ matrix.target == 'windows' }}
         run: |
           scons platform=windows arch=x86_32 lto=full profile="custom.py" target=template_debug
           scons platform=windows arch=x86_32 lto=full profile="custom.py" target=template_release debug_symbols=no
@@ -131,7 +133,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: export-templates
+          name: export-templates-${{ matrix.target }}
           path: |
             bin/*
             !bin/obj/

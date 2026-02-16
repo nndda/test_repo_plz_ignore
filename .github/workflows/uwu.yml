@@ -11,26 +11,30 @@ defaults:
     shell: bash
 
 jobs:
-  build:
+  build-linux-windows:
     env:
       GODOT_VERSION: 4.6.1-stable
 
     strategy:
       matrix:
         include:
-          - target: linux
-            runner: ubuntu-22.04
+          # Linux
+          - target: linuxbsd
             arch: x86_64
-          - target: linux
             runner: ubuntu-22.04
+
+          - target: linuxbsd
             arch: x86_32
+            runner: ubuntu-22.04
+
+          # Windows
+          - target: windows
+            arch: x86_64
+            runner: ubuntu-24.04
 
           - target: windows
-            runner: ubuntu-latest
-            arch: x86_64
-          - target: windows
-            runner: ubuntu-latest
             arch: x86_32
+            runner: ubuntu-24.04
 
     runs-on: ${{ matrix.runner }}
 
@@ -40,112 +44,25 @@ jobs:
         with:
           python-version: "3.14.2"
 
-      - name: Install dependencies
-        run: | 
-          sudo apt-get update
-          sudo apt-get install -y \
-            build-essential \
-            scons \
-            pkg-config \
-            libx11-dev \
-            libxcursor-dev \
-            libxinerama-dev \
-            libgl1-mesa-dev \
-            libglu1-mesa-dev \
-            libasound2-dev \
-            libpulse-dev \
-            libudev-dev \
-            libxi-dev \
-            libxrandr-dev \
-            libwayland-dev \
-            mingw-w64 \
-            g++-multilib \
-            gcc-multilib \
-            unzip \
-            curl
-
-          echo "Python version:"
-          python --version
-
-      - name: Checkout Godot source code repository
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
         with:
-          repository: godotengine/godot
-          ref: ${{ env.GODOT_VERSION }}
+          repository: nndda/build-godot
+          sparse-checkout: |
+            build-exports.sh
+          sparse-checkout-cone-mode: true
 
-      - name: Set build options
+      - name: Build platform: ${{ matrix.target }}-${{ matrix.arch }}
         run: |
-          cat <<EOF > custom.py
-          production = "yes"
-          disable_3d = "yes"
-          minizip = "no"
-          deprecated = "no"
-          module_basis_universal_enabled = "no"
-          module_bmp_enabled = "no"
-          module_camera_enabled = "no"
-          module_csg_enabled = "no"
-          module_dds_enabled = "no"
-          module_enet_enabled = "no"
-          module_gltf_enabled = "no"
-          module_gridmap_enabled = "no"
-          module_hdr_enabled = "no"
-          module_jpg_enabled = "no"
-          module_jsonrpc_enabled = "no"
-          module_ktx_enabled = "no"
-          module_meshoptimizer_enabled = "no"
-          module_minimp3_enabled = "no"
-          module_mobile_vr_enabled = "no"
-          module_msdfgen_enabled = "no"
-          module_navigation_enabled = "no"
-          module_openxr_enabled = "no"
-          module_raycast_enabled = "no"
-          module_tga_enabled = "no"
-          module_theora_enabled = "no"
-          module_upnp_enabled = "no"
-          module_vhacd_enabled = "no"
-          module_webrtc_enabled = "no"
-          module_websocket_enabled = "no"
-          module_webxr_enabled = "no"
-          module_zip_enabled = "no"
-          openxr = "no"
-          EOF
+          chmod +x ./build-exports.sh
+          ./build-exports.sh
+        env:
+          EXPORT_PLATFORM: ${{ matrix.target }}
+          EXPORT_ARCH: ${{ matrix.arch }}
 
-      - name: Build Linux export templates
-        if: ${{ matrix.target == 'linux' }}
-        run: |
-          scons platform=linuxbsd arch=${{ matrix.arch }} lto=full profile="custom.py" target=template_release debug_symbols=no
-
-      - name: Update POSIX
-        if: ${{ matrix.target == 'windows' }}
-        run: |
-          sudo update-alternatives --set x86_64-w64-mingw32-gcc \
-            /usr/bin/x86_64-w64-mingw32-gcc-posix
-          sudo update-alternatives --set x86_64-w64-mingw32-g++ \
-            /usr/bin/x86_64-w64-mingw32-g++-posix
-
-          sudo update-alternatives --set i686-w64-mingw32-gcc \
-            /usr/bin/i686-w64-mingw32-gcc-posix
-          sudo update-alternatives --set i686-w64-mingw32-g++ \
-            /usr/bin/i686-w64-mingw32-g++-posix
-
-          echo "MinGW-w64:"
-          x86_64-w64-mingw32-gcc --version
-          i686-w64-mingw32-gcc --version
-
-      - name: Install Direct3D 12 driver
-        if: ${{ matrix.target == 'windows' }}
-        run: |
-          python ./misc/scripts/install_d3d12_sdk_windows.py
-
-      - name: Build Windows export template
-        if: ${{ matrix.target == 'windows' }}
-        run: |
-          scons platform=windows arch=${{ matrix.arch }} lto=full profile="custom.py" use_mingw=yes target=template_release debug_symbols=no
-
-      - name: Upload build artifacts
+      - name: Upload build artifact
         uses: actions/upload-artifact@v6
         with:
-          name: export-templates-${{ matrix.target }}-${{ matrix.arch }}
+          name: export-template-${{ matrix.target }}-${{ matrix.arch }}
           path: |
             bin/*
             !bin/obj/

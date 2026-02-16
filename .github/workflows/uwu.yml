@@ -24,6 +24,11 @@ jobs:
           - windows
 
     steps:
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14.2"
+
       - name: Install dependencies
         run: | 
           sudo apt-get update
@@ -46,10 +51,10 @@ jobs:
             unzip \
             curl
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.14.2"
+          echo ""
+
+          python --version
+          x86_64-w64-mingw32-gcc --version
 
       - name: Checkout Godot source code repository
         uses: actions/checkout@v6
@@ -97,10 +102,10 @@ jobs:
       - name: Build Linux export templates
         if: ${{ matrix.target == 'linux' }}
         run: |
-          scons platform=linuxbsd arch=x86_64 lto=full profile="custom.py" target=template_debug
+          # scons platform=linuxbsd arch=x86_64 lto=full profile="custom.py" target=template_debug
           scons platform=linuxbsd arch=x86_64 lto=full profile="custom.py" target=template_release debug_symbols=no
 
-          scons platform=linuxbsd arch=x86_32 lto=full profile="custom.py" target=template_debug
+          # scons platform=linuxbsd arch=x86_32 lto=full profile="custom.py" target=template_debug
           scons platform=linuxbsd arch=x86_32 lto=full profile="custom.py" target=template_release debug_symbols=no
 
       - name: Update POSIX
@@ -124,11 +129,11 @@ jobs:
       - name: Build Windows export template
         if: ${{ matrix.target == 'windows' }}
         run: |
-          scons platform=windows arch=x86_32 lto=full profile="custom.py" target=template_debug
-          scons platform=windows arch=x86_32 lto=full profile="custom.py" target=template_release debug_symbols=no
+          # scons platform=windows arch=x86_32 lto=full profile="custom.py" use_mingw=yes target=template_debug
+          scons platform=windows arch=x86_32 lto=full profile="custom.py" use_mingw=yes target=template_release debug_symbols=no
 
-          scons platform=windows arch=x86_64 lto=full profile="custom.py" target=template_debug
-          scons platform=windows arch=x86_64 lto=full profile="custom.py" target=template_release debug_symbols=no
+          # scons platform=windows arch=x86_64 lto=full profile="custom.py" use_mingw=yes target=template_debug
+          scons platform=windows arch=x86_64 lto=full profile="custom.py" use_mingw=yes target=template_release debug_symbols=no
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v6

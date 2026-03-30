@@ -11,7 +11,7 @@ defaults:
     shell: bash
 
 jobs:
-  build-desktop:
+  build:
     env:
       GODOT_VERSION: 4.6.1-stable
 
@@ -62,7 +62,7 @@ jobs:
           python-version: "3.14.2"
 
       - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
-        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/c2b35b53662d3bf7d4a806dc2a7ba27a09448f0b/build-exports.sh | bash
+        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/c53fa207250ae70c7e72f4ec6b17d0f3d9fc4cbb/build-exports.sh | bash
         env:
           EXPORT_PLATFORM: ${{ matrix.target }}
           EXPORT_ARCH: ${{ matrix.arch }}

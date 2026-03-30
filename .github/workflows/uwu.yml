@@ -62,7 +62,7 @@ jobs:
           python-version: "3.14.2"
 
       - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
-        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/c53fa207250ae70c7e72f4ec6b17d0f3d9fc4cbb/build-exports.sh | bash
+        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/08b6cb6f44f34d81e1272a7f50b395cb94182f72/build-exports.sh | bash
         env:
           EXPORT_PLATFORM: ${{ matrix.target }}
           EXPORT_ARCH: ${{ matrix.arch }}
@@ -71,7 +71,4 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: export-template-${{ matrix.target }}-${{ matrix.arch }}
-          path: |
-            bin/*
-            !bin/obj/
-            !bin/build_deps/
+          path: ${{ matrix.target }}-${{ matrix.arch }}.7z

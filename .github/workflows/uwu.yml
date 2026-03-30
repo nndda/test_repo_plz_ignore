@@ -33,8 +33,8 @@ jobs:
           #   runner: ubuntu-22.04
 
           - target: linuxbsd
-           arch: x86_32
-           runner: ubuntu-22.04
+            arch: x86_32
+            runner: ubuntu-22.04
 
           # Windows
           - target: windows
@@ -46,8 +46,8 @@ jobs:
           #   runner: ubuntu-24.04
 
           - target: windows
-           arch: x86_32
-           runner: ubuntu-24.04
+            arch: x86_32
+            runner: ubuntu-24.04
 
     runs-on: ${{ matrix.runner }}
 

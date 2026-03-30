@@ -58,7 +58,7 @@ jobs:
           python-version: "3.14.2"
 
       - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
-        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/d982f51fa05e03e514edb506b08beb5127e235af/build-exports.sh | bash
+        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/7d6784a4e22e048786a39cd4b0ac6f45411633fb/build-exports.sh | bash
         env:
           EXPORT_PLATFORM: ${{ matrix.target }}
           EXPORT_ARCH: ${{ matrix.arch }}

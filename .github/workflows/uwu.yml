@@ -19,31 +19,35 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - target: android
+            arch:
+            runner: ubuntu-24.04
+
           # Linux
           - target: linuxbsd
             arch: x86_64
             runner: ubuntu-22.04
 
-          - target: linuxbsd
-            arch: arm64
-            runner: ubuntu-22.04
+          # - target: linuxbsd
+          #   arch: arm64
+          #   runner: ubuntu-22.04
 
-          #- target: linuxbsd
-          #  arch: x86_32
-          #  runner: ubuntu-22.04
+          - target: linuxbsd
+           arch: x86_32
+           runner: ubuntu-22.04
 
           # Windows
           - target: windows
             arch: x86_64
             runner: ubuntu-24.04
 
-          - target: windows
-            arch: arm64
-            runner: ubuntu-24.04
+          # - target: windows
+          #   arch: arm64
+          #   runner: ubuntu-24.04
 
-          #- target: windows
-          #  arch: x86_32
-          #  runner: ubuntu-24.04
+          - target: windows
+           arch: x86_32
+           runner: ubuntu-24.04
 
     runs-on: ${{ matrix.runner }}
 
@@ -54,7 +58,7 @@ jobs:
           python-version: "3.14.2"
 
       - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
-        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/2bed66cf2285a4fd25ebc2ea87d101c3357019a1/build-exports.sh | bash
+        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/d982f51fa05e03e514edb506b08beb5127e235af/build-exports.sh | bash
         env:
           EXPORT_PLATFORM: ${{ matrix.target }}
           EXPORT_ARCH: ${{ matrix.arch }}

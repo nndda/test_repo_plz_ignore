@@ -24,28 +24,38 @@ jobs:
         include:
           - target: android
             arch: arm64
-            type: release
+            # type: release
             runner: ubuntu-24.04
 
+          # - target: android
+          #   arch: arm64
+          #   # type: debug
+          #   runner: ubuntu-24.04
+
           - target: android
-            arch: arm64
-            type: debug
+            arch: arm32-arm64
+            # type: release
             runner: ubuntu-24.04
 
           - target: android
             arch: arm32
-            type: release
+            # type: release
             runner: ubuntu-24.04
 
-          - target: android
-            arch: arm32
-            type: debug
-            runner: ubuntu-24.04
+          # - target: android
+          #   arch: arm32
+          #   # type: debug
+          #   runner: ubuntu-24.04
+
+          # - target: android
+          #   arch: arm32-arm64
+          #   # type: debug
+          #   runner: ubuntu-24.04
 
           # Linux
           - target: linuxbsd
             arch: x86_64
-            type: release
+            # type: release
             runner: ubuntu-22.04
 
           # - target: linuxbsd
@@ -59,7 +69,7 @@ jobs:
 
           - target: linuxbsd
             arch: x86_32
-            type: release
+            # type: release
             runner: ubuntu-22.04
 
           # - target: linuxbsd
@@ -70,7 +80,7 @@ jobs:
           # Windows
           - target: windows
             arch: x86_64
-            type: release
+            # type: release
             runner: ubuntu-24.04
 
           # - target: windows
@@ -84,7 +94,7 @@ jobs:
 
           - target: windows
             arch: x86_32
-            type: release
+            # type: release
             runner: ubuntu-24.04
 
           # - target: windows
@@ -102,7 +112,7 @@ jobs:
 
       - name: Download build script
         run: |
-          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/d139cd0a83837ee95a84a4cec308f7404b79e62c/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
+          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/9c5623687ec1d715b3fb44e0795bb0562ac218ed/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
 
       - name: Setup
         run: bash "${{ runner.temp }}/script.sh" setup

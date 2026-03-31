@@ -104,10 +104,10 @@ jobs:
         run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/7e77f4ff56252418b19e06737cbc0a72f24c6399/build-exports.sh -o "$RUNNER_TEMP/script.sh"
 
       - name: Setup
-        run: bash "$RUNNER_TEMP/script.sh" install
+        run: bash "${{ runner.temp }}/script.sh" install
 
       - name: Build
-        run: bash "$RUNNER_TEMP/script.sh" build
+        run: bash "${{ runner.temp }}/script.sh" build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v6

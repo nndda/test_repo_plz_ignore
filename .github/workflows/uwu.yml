@@ -112,7 +112,7 @@ jobs:
 
       - name: Download build script
         run: |
-          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/9c5623687ec1d715b3fb44e0795bb0562ac218ed/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
+          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/f08b64f569c50f094870e91069da2b8c3cd1b46c/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
 
       - name: Setup
         run: bash "${{ runner.temp }}/script.sh" setup
@@ -123,5 +123,5 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v6
         with:
-          name: export-template-${{ matrix.target }}-${{ matrix.type }}-${{ matrix.arch }}
-          path: ${{ matrix.target }}-${{ matrix.type }}-${{ matrix.arch }}.7z
+          name: export-template-${{ matrix.target }}-${{ matrix.arch }}
+          path: ${{ matrix.target }}-${{ matrix.arch }}.7z

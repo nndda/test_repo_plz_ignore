@@ -101,7 +101,7 @@ jobs:
           python-version: "3.14.2"
 
       - name: Download build script
-        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/7e77f4ff56252418b19e06737cbc0a72f24c6399/build-exports.sh -o "$RUNNER_TEMP/script.sh"
+        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/7e77f4ff56252418b19e06737cbc0a72f24c6399/build-exports.sh -o "$RUNNER_TEMP/script.sh" && chmod +x "$RUNNER_TEMP/script.sh"
 
       - name: Setup
         run: bash "${{ runner.temp }}/script.sh" install

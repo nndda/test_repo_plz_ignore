@@ -102,7 +102,7 @@ jobs:
 
       - name: Download build script
         run: |
-          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/44e722575635e30c0a465045744bd3dd6e9293a9/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
+          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/6dc9aab3a5b707b4a0a5f6caa63ba4e671260e8a/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
 
       - name: Setup
         run: bash "${{ runner.temp }}/script.sh" setup

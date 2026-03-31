@@ -107,5 +107,5 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v6
         with:
-          name: export-template-${{ matrix.target }}-${{ matrix.arch }}
-          path: ${{ matrix.target }}-${{ matrix.arch }}.7z
+          name: export-template-${{ matrix.target }}-${{ matrix.type }}-${{ matrix.arch }}
+          path: ${{ matrix.target }}-${{ matrix.type }}-${{ matrix.arch }}.7z

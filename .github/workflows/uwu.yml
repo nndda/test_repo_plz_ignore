@@ -102,14 +102,13 @@ jobs:
 
       - name: Download build script
         run: |
-          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/08699f29d7ba86c4a56997f138473071a1910b09/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
-          ls "${{ runner.temp }}"
+          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/18501830e26ad1a42ae18274453a9e9227a43bbb/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
 
       - name: Setup
-        run: bash "${{ runner.temp }}/script.sh" -- install_uwu
+        run: bash "${{ runner.temp }}/script.sh" setup
 
       - name: Build
-        run: bash "${{ runner.temp }}/script.sh" -- build_uwu
+        run: bash "${{ runner.temp }}/script.sh" build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v6

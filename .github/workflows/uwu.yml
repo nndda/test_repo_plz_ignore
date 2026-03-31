@@ -101,7 +101,9 @@ jobs:
           python-version: "3.14.2"
 
       - name: Download build script
-        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/79b84a9a9896a59856a355a72724763f40da122a/build-exports.sh -o "$RUNNER_TEMP/script.sh" && chmod +x "$RUNNER_TEMP/script.sh"
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/79b84a9a9896a59856a355a72724763f40da122a/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
+          ls "${{ runner.temp }}"
 
       - name: Setup
         run: bash "${{ runner.temp }}/script.sh" -- install_uwu

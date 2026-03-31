@@ -21,15 +21,33 @@ jobs:
         include:
           - target: android
             arch: arm64
+            type: release
+            runner: ubuntu-24.04
+
+          - target: android
+            arch: arm64
+            type: debug
             runner: ubuntu-24.04
 
           - target: android
             arch: arm32
+            type: release
+            runner: ubuntu-24.04
+
+          - target: android
+            arch: arm32
+            type: debug
             runner: ubuntu-24.04
 
           # Linux
           - target: linuxbsd
             arch: x86_64
+            type: release
+            runner: ubuntu-22.04
+
+          - target: linuxbsd
+            arch: x86_64
+            type: debug
             runner: ubuntu-22.04
 
           # - target: linuxbsd
@@ -38,11 +56,23 @@ jobs:
 
           - target: linuxbsd
             arch: x86_32
+            type: release
+            runner: ubuntu-22.04
+
+          - target: linuxbsd
+            arch: x86_32
+            type: debug
             runner: ubuntu-22.04
 
           # Windows
           - target: windows
             arch: x86_64
+            type: release
+            runner: ubuntu-24.04
+
+          - target: windows
+            arch: x86_64
+            type: debug
             runner: ubuntu-24.04
 
           # - target: windows
@@ -51,6 +81,12 @@ jobs:
 
           - target: windows
             arch: x86_32
+            type: release
+            runner: ubuntu-24.04
+
+          - target: windows
+            arch: x86_32
+            type: debug
             runner: ubuntu-24.04
 
     runs-on: ${{ matrix.runner }}
@@ -62,10 +98,11 @@ jobs:
           python-version: "3.14.2"
 
       - name: Build platform ${{ matrix.target }}-${{ matrix.arch }}
-        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/c6c868b7fe7aa74a8a82ee8aaa0714a5723f4363/build-exports.sh | bash
+        run: curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/b2be9a15d1fdc5230efddcf759abdf40b15cb634/build-exports.sh | bash
         env:
           EXPORT_PLATFORM: ${{ matrix.target }}
           EXPORT_ARCH: ${{ matrix.arch }}
+          EXPORT_TYPE: ${{ matrix.type }}
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v6

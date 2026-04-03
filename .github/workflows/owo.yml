@@ -1,0 +1,13 @@
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  owo:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Install Dependencies
+        run: which strip

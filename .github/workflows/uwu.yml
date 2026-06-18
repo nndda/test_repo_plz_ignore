@@ -103,7 +103,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: nndda/build-godot@1594b8bc3bba060587ad124e3347dedfd00b12c3
+      - uses: nndda/build-godot@dbb6f41aab715a28894f4c324ffb2ea767b21b2f
         with:
           godot-version: ${{ env.GODOT_VERSION }}
           target: ${{ matrix.target }}

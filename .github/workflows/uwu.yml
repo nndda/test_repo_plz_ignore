@@ -19,35 +19,41 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - target: android
-            arch: arm64
-            # type: release
-            runner: ubuntu-24.04
-
           # - target: android
           #   arch: arm64
-          #   # type: debug
+          #   # type: release
           #   runner: ubuntu-24.04
 
-          - target: android
-            arch: arm32-arm64
-            # type: release
-            runner: ubuntu-24.04
-
-          - target: android
-            arch: arm32
-            # type: release
-            runner: ubuntu-24.04
-
-          # - target: android
-          #   arch: arm32
-          #   # type: debug
-          #   runner: ubuntu-24.04
+          # # - target: android
+          # #   arch: arm64
+          # #   # type: debug
+          # #   runner: ubuntu-24.04
 
           # - target: android
           #   arch: arm32-arm64
-          #   # type: debug
+          #   # type: release
           #   runner: ubuntu-24.04
+
+          # - target: android
+          #   arch: arm32
+          #   # type: release
+          #   runner: ubuntu-24.04
+
+          # # - target: android
+          # #   arch: arm32
+          # #   # type: debug
+          # #   runner: ubuntu-24.04
+
+          # # - target: android
+          # #   arch: arm32-arm64
+          # #   # type: debug
+          # #   runner: ubuntu-24.04
+
+
+
+
+
+
 
           # Linux
           - target: linuxbsd
@@ -103,7 +109,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: nndda/build-godot@dbb6f41aab715a28894f4c324ffb2ea767b21b2f
+
+      - name: Build Godot project
+        uses: nndda/build-godot@dbb6f41aab715a28894f4c324ffb2ea767b21b2f
         with:
           godot-version: ${{ env.GODOT_VERSION }}
           target: ${{ matrix.target }}

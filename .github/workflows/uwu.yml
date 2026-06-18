@@ -29,10 +29,10 @@ jobs:
           # #   # type: debug
           # #   runner: ubuntu-24.04
 
-          # - target: android
-          #   arch: arm32-arm64
-          #   # type: release
-          #   runner: ubuntu-24.04
+          - target: android
+            arch: arm32-arm64
+            # type: release
+            runner: ubuntu-24.04
 
           # - target: android
           #   arch: arm32
@@ -70,10 +70,10 @@ jobs:
           #   arch: arm64
           #   runner: ubuntu-22.04
 
-          - target: linuxbsd
-            arch: x86_32
-            # type: release
-            runner: ubuntu-22.04
+          # - target: linuxbsd
+          #   arch: x86_32
+          #   # type: release
+          #   runner: ubuntu-22.04
 
           # - target: linuxbsd
           #   arch: x86_32
@@ -95,10 +95,10 @@ jobs:
           #   arch: arm64
           #   runner: ubuntu-24.04
 
-          - target: windows
-            arch: x86_32
-            # type: release
-            runner: ubuntu-24.04
+          # - target: windows
+          #   arch: x86_32
+          #   # type: release
+          #   runner: ubuntu-24.04
 
           # - target: windows
           #   arch: x86_32

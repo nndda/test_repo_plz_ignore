@@ -108,8 +108,6 @@ jobs:
     runs-on: ${{ matrix.runner }}
 
     steps:
-      - uses: actions/checkout@v6
-
       - name: Build Godot project
         uses: nndda/build-godot@dbb6f41aab715a28894f4c324ffb2ea767b21b2f
         with:

@@ -14,9 +14,6 @@ jobs:
   build:
     env:
       GODOT_VERSION: 4.6.1-stable
-      EXPORT_PLATFORM: ${{ matrix.target }}
-      EXPORT_ARCH: ${{ matrix.arch }}
-      EXPORT_TYPE: ${{ matrix.type }}
 
     strategy:
       fail-fast: false
@@ -105,20 +102,12 @@ jobs:
     runs-on: ${{ matrix.runner }}
 
     steps:
-      - name: Setup Python
-        uses: actions/setup-python@v6
+      - uses: actions/checkout@v6
+      - uses: nndda/build-godot@1594b8bc3bba060587ad124e3347dedfd00b12c3
         with:
-          python-version: "3.14.2"
-
-      - name: Download build script
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/nndda/build-godot/4910d6dde1a04858cac659cba3f9c2faae48d056/build-exports.sh -o "${{ runner.temp }}/script.sh" && chmod +x "${{ runner.temp }}/script.sh"
-
-      - name: Setup
-        run: bash "${{ runner.temp }}/script.sh" setup
-
-      - name: Build
-        run: bash "${{ runner.temp }}/script.sh" build
+          godot-version: ${{ env.GODOT_VERSION }}
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v6
